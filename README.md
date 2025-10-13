@@ -15,7 +15,7 @@ A simple web scraping tool built with Go.
 ## Installation
 
 ```bash
-git clone https://github.com/yourusername/webscraper_go.git
+git clone https://github.com/Kushan2k/web-scrapper-using-golang.git
 cd webscraper_go
 go mod tidy
 ```
