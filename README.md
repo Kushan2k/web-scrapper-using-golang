@@ -25,8 +25,15 @@ go mod tidy
 ```bash
 go run main.go
 ```
+## Try
 
-Edit `main.go` to specify the target URL and the data you want to extract.
+run the application using
+```bash
+
+go run main.go <depth>
+go run main.go 2
+
+```
 
 ## License
 
