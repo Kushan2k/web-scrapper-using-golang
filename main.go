@@ -34,6 +34,7 @@ func main() {
 	var url string
 	var elements = map[string]string{
 		"h1":    "main headdings",
+		"h2":    "sub headings",
 		"img":   "images",
 		"title": "title of the page",
 		"p":     "all the paragraps",
@@ -90,7 +91,7 @@ func main() {
 
 	for res := range results {
 		for k, v := range res {
-			fmt.Printf("%s: %s\n", k, v)
+			fmt.Printf("%s : %s\n", k, v)
 		}
 	}
 
