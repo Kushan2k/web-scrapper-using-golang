@@ -1,7 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"os"
 	"strconv"
@@ -33,13 +35,7 @@ func main() {
 	}
 
 	var url string
-	var elements = map[string]string{
-		"h1":    "main headdings",
-		"h2":    "sub headings",
-		"img":   "images",
-		"title": "title of the page",
-		"p":     "all the paragraps",
-	}
+	var elements = map[string]string{}
 	var to_find = []string{}
 
 	var results = make(chan map[string]string, 10)
@@ -53,6 +49,23 @@ func main() {
 
 	if !suc {
 		log.Fatalln(err.Error())
+	}
+
+	file, err := os.Open("./tags.json")
+
+	if err != nil {
+		log.Fatalln("Error opening tags.json:", err)
+	}
+	defer file.Close()
+
+	bytes,err:=io.ReadAll(file)
+
+	if err != nil {
+		log.Fatalln("Error reading tags.json:", err)
+	}
+	err = json.Unmarshal(bytes, &elements)
+	if err != nil {
+		log.Fatalln("Error unmarshalling tags.json:", err)
 	}
 
 	utils.Generate_list(elements, &to_find)
@@ -80,7 +93,18 @@ func main() {
 			defer wg.Done()
 			c.OnHTML(v, func(html *colly.HTMLElement) {
 
-				results <- map[string]string{v: html.Text}
+				switch v {
+				case "img":
+					results <- map[string]string{v: html.Attr("src")}
+				case "a":
+					results <- map[string]string{v: html.Attr("href")}
+				case "title":
+					results <- map[string]string{v: html.Text}
+
+				default:
+					results <- map[string]string{v: html.Text}
+
+				}
 			})
 
 		}(val)
