@@ -1,0 +1,11 @@
+{
+  "h1": "main heading",
+  "title": "title of the site",
+  "h2": "sub heading",
+  "p": "paragraph",
+  "a": "links",
+  "img": "images",
+  "ul": "unordered list",
+  "ol": "ordered list",
+  "table": "table"
+}
